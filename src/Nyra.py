@@ -2,11 +2,12 @@ from gtts import gTTS
 import speech_recognition as sr
 import os
 import sys
-import signal
+import subprocess
+#import signal
 import datetime
 import wikipedia
 import webbrowser
-import sys
+import random
 
 class Nyra:
 	def __init__(self):
@@ -32,7 +33,7 @@ class Nyra:
 			return "None"
 	
 	def respond(self, query):
-		if "shut up" in query:
+		if "quit yourself" in query:
 			self.speak(f"I'm quitting myself. Have a nice time {self.username}. Good Bye!")
 			exit()
 #		elif "stop" in query:
@@ -52,36 +53,37 @@ class Nyra:
 			except Exception as e:
 				print(e)
 				self.speak("Nothing found. Please try again.")
-		elif "google" in query:
+		elif "open google" in query:
 			self.speak("Opening Google for you. Just wait.")
 			webbrowser.open("https://google.com")
-		elif "gmail" in query:
+		elif "open gmail" in query:
 			self.speak("Opening your Gmail. Just wait.")
 			webbrowser.open("https://gmail.com")
-		elif "youtube" in query:
+		elif "open youtube" in query:
 			self.speak("Opening Youtube for you. Just wait.")
 			webbrowser.open("https://youtube.com")
-		elif "github" in query:
-			self.speak("Opening Github for you. Just wait.")
+		elif "open github" in query:
+			self.speak("Opening your Github. Just wait.")
 			webbrowser.open("https://github.com")
-		elif "stackoverflow" in query:
+		elif "open stackoverflow" in query:
 			self.speak("Opening Stack Overflow for you. Just wait.")
 			webbrowser.open("https://stackoverflow.com")
 		elif "play some music" in query:
 			music_dir = "/home/pi/Music"
 			songs = os.listdir(music_dir)
-			print(songs)
 			opener = "open" if sys.platform == "darwin" else "xdg-open"
-			subprocess.call([opener, os.path.join(music_dir, songs[randint(0, 100)])])
+			subprocess.call([opener, os.path.join(music_dir, songs[random.randint(0, 100)])])
 		elif "psychedelic music" in query:
 			music_dir = "/home/pi/Downloads"
 			songs = os.listdir(music_dir)
-			print(songs)
 			opener = "open" if sys.platform == "darwin" else "xdg-open"
 			subprocess.call([opener, os.path.join(music_dir, songs[0])])
 		elif "current time" in query:
 			strTime = datetime.datetime.now().strftime("%H:%M:%S")
 			self.speak("It's "+strTime)
+		else:
+			self.speak(f"{self.username}, your query didn't match with my database. Try something else.")
+			return
 		self.speak("Anything else?")
 	
 	def speak(self, text):
