@@ -33,7 +33,7 @@ class Nyra:
 			return "None"
 	
 	def respond(self, query):
-		if "quit yourself" in query:
+		if "stop yourself" in query:
 			self.speak(f"I'm quitting myself. Have a nice time {self.username}. Good Bye!")
 			exit()
 #		elif "stop" in query:
@@ -43,6 +43,42 @@ class Nyra:
 #			os.kill(pid, signal.SIGINT)
 #			if not p.poll():
 #				print("Process correctly halted.")
+		elif "current time" in query:
+			strTime = datetime.datetime.now().strftime("%H:%M:%S")
+			self.speak("It's "+strTime)
+#		elif "open the terminal" in query:
+#			self.speak("Opening the terminal for you.")
+#			os.system("gnome-terminal")
+#		elif "close the terminal" in query:
+#			self.speak("Closing the terminal.")
+#			os.system("exit")
+		elif "status" in query:
+			self.speak("Showing the current status of git of this local repository on your screen.")
+			os.system("git status")
+		elif "logs" in query:
+			self.speak("Showing the current git logs of this local repository on your screen.")
+			os.system("git status")
+		elif "add these changes" in query:
+			self.speak("Adding your current changes in the staging area.")
+			os.system("git add .")
+		elif "make a commit" in query:
+			self.speak("Commiting your changes.")
+			os.system("git commit -m \"Commit By AssistantNyra\"")
+		elif "push these changes" in query:
+			self.speak("Pushing your current changes into the master branch of the origin.")
+			os.system("git push -u origin master")
+		elif "play some music" in query:
+			self.speak(f"OK {self.username}. Playing some random music from your favourite library.")
+			music_dir = "/home/pi/Music"
+			songs = os.listdir(music_dir)
+			opener = "open" if sys.platform == "darwin" else "xdg-open"
+			subprocess.call([opener, os.path.join(music_dir, songs[random.randint(0, 100)])])
+		elif "psychedelic music" in query:
+			self.speak(f"OK {self.username}. Playing your favourite psychedelic hardcore party music.")
+			music_dir = "/home/pi/Downloads"
+			songs = os.listdir(music_dir)
+			opener = "open" if sys.platform == "darwin" else "xdg-open"
+			subprocess.call([opener, os.path.join(music_dir, songs[0])])
 		elif "wikipedia" in query:
 			self.speak("Searching wikipedia")
 			query = query.replace("wikipedia", "")
@@ -68,19 +104,6 @@ class Nyra:
 		elif "open stackoverflow" in query:
 			self.speak("Opening Stack Overflow for you. Just wait.")
 			webbrowser.open("https://stackoverflow.com")
-		elif "play some music" in query:
-			music_dir = "/home/pi/Music"
-			songs = os.listdir(music_dir)
-			opener = "open" if sys.platform == "darwin" else "xdg-open"
-			subprocess.call([opener, os.path.join(music_dir, songs[random.randint(0, 100)])])
-		elif "psychedelic music" in query:
-			music_dir = "/home/pi/Downloads"
-			songs = os.listdir(music_dir)
-			opener = "open" if sys.platform == "darwin" else "xdg-open"
-			subprocess.call([opener, os.path.join(music_dir, songs[0])])
-		elif "current time" in query:
-			strTime = datetime.datetime.now().strftime("%H:%M:%S")
-			self.speak("It's "+strTime)
 		else:
 			self.speak(f"{self.username}, your query didn't match with my database. Try something else.")
 			return
