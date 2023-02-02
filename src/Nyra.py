@@ -64,6 +64,9 @@ class Nyra:
 		elif "make a commit" in query:
 			self.speak("Commiting your changes.")
 			os.system("git commit -m \"Commit By AssistantNyra\"")
+		elif "pull the changes" in query:
+			self.speak("Pulling the current changes from the master branch of the origin.")
+			os.system("git pull origin master")
 		elif "push these changes" in query:
 			self.speak("Pushing your current changes into the master branch of the origin.")
 			os.system("git push -u origin master")
